@@ -1,0 +1,93 @@
+---
+import {
+  videos,
+  totalViews,
+  formatViews,
+  embedUrl,
+  thumbnailUrl,
+  isPlaceholder,
+  type Video,
+} from '../data/videos';
+
+const hasVideos = videos.length > 0;
+const displayedVideos = videos.slice(0, 3);
+const featuredTotal = totalViews(videos);
+---
+
+<section id="work" class="py-16 md:py-20 border-t border-stone-200 flip-in">
+  <div class="container-tight">
+    <!-- Section header -->
+    <div class="flex items-baseline justify-between gap-4">
+      <div>
+        <p class="font-mono text-xs uppercase tracking-[0.2em] text-stone-500">
+          <span class="text-[#c49a3c] mr-2">✦</span> Reel
+        </p>
+        <h2 class="mt-2 font-display text-3xl md:text-4xl font-normal text-stone-900 tracking-tight">
+          Some of my work.
+        </h2>
+      </div>
+      {hasVideos && (
+        <p class="font-mono text-xs uppercase tracking-[0.2em] text-stone-500 hidden sm:block">
+          <span class="text-[#c49a3c]">{formatViews(featuredTotal)}</span> views
+        </p>
+      )}
+    </div>
+
+    {hasVideos && (
+      <div class="mt-10 grid grid-cols-1 sm:grid-cols-3 gap-6">
+        {displayedVideos.map((video: Video) => (
+          <a
+            href={video.url}
+            target="_blank"
+            rel="noopener"
+            class="group block"
+            aria-label={`Watch "${video.title}"`}
+          >
+            <div class="relative aspect-video overflow-hidden bg-stone-200 rounded-xl">
+              {isPlaceholder(video) ? (
+                <div class="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-stone-300 to-stone-400">
+                  <div class="w-14 h-14 rounded-full bg-white/50 backdrop-blur-sm flex items-center justify-center ring-1 ring-white/60 group-hover:bg-white/70 transition-colors">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="#c49a3c" aria-hidden="true">
+                      <path d="M8 5v14l11-7z" />
+                    </svg>
+                  </div>
+                </div>
+              ) : (
+                <iframe
+                  src={embedUrl(video)}
+                  title={video.title}
+                  class="absolute inset-0 w-full h-full"
+                  loading="lazy"
+                  allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowfullscreen
+                ></iframe>
+              )}
+            </div>
+
+            <div class="mt-4">
+              <p class="font-mono text-xs uppercase tracking-[0.2em] text-stone-500">
+                {video.brand}<span class="mx-1.5 text-stone-300">·</span>{video.year}
+              </p>
+              <h3 class="mt-1.5 font-display text-lg font-normal text-stone-900 group-hover:text-[#c49a3c] transition-colors leading-snug">
+                {video.title}
+              </h3>
+              <div class="mt-1 flex items-center justify-between">
+                <p class="text-xs text-stone-500">{video.role}</p>
+                <p class="font-display text-xl font-normal text-[#c49a3c]">
+                  {formatViews(video.views)}
+                </p>
+              </div>
+            </div>
+          </a>
+        ))}
+      </div>
+    )}
+
+    {videos.some(isPlaceholder) && (
+      <p class="mt-8 text-xs text-stone-500">
+        <span class="inline-block w-1 h-1 rounded-full bg-[#c49a3c] align-middle mr-1.5"></span>
+        Showing sample placeholders. Replace in <code class="mx-1 px-1 py-0.5 rounded bg-stone-200 font-mono text-stone-600 text-xs">src/data/videos.ts</code>
+      </p>
+    )}
+  </div>
+</section>

@@ -1,0 +1,88 @@
+---
+import { experience, profile } from '../data/resume';
+
+const visible = experience.filter((r) => {
+  const c = r.company.toLowerCase();
+  return !c.includes('allied') && !c.includes('german valdivia');
+});
+
+const internCount = experience.length - visible.length;
+---
+
+<section id="experience" class="py-16 md:py-20 border-t border-stone-200 flip-in">
+  <div class="container-tight">
+    <h2 class="font-display text-3xl md:text-4xl font-normal text-stone-900 tracking-tight">
+      <span class="text-[#c49a3c] mr-3">✦</span>What I've done.
+    </h2>
+
+    <div class="mt-10 relative">
+      <!-- Timeline line -->
+      <div class="absolute left-[11px] top-3 bottom-3 w-px bg-stone-200"></div>
+
+      <ol class="space-y-0">
+        {visible.map((role, idx) => {
+          const isCurrent = role.end.toLowerCase() === 'present';
+          const isLast = idx === visible.length - 1;
+          return (
+            <li class={`relative pl-8 md:pl-10 spotlight  ${isLast ? 'pb-0' : 'pb-10 md:pb-12'}`}>
+              {/* Timeline node */}
+              <div class={`absolute left-[11px] top-1.5 -translate-x-1/2 rounded-full ${isCurrent ? 'w-3 h-3 bg-[#c49a3c] ring-2 ring-[#c49a3c]/30 ring-offset-2 ring-offset-[#f7f5f0]' : 'w-2 h-2 bg-stone-400'}`}></div>
+
+              {/* Content */}
+              <div>
+                {/* Role + dates row */}
+                <div class="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+                  <h3 class="font-display text-xl md:text-2xl font-normal text-stone-900">
+                    {role.role}
+                  </h3>
+                  <span class="text-stone-300">·</span>
+                  <p class="font-mono text-xs uppercase tracking-wider text-stone-500">
+                    {role.start}<span class="mx-1">–</span>{role.end}
+                  </p>
+                  {isCurrent && (
+                    <span class="inline-flex items-center gap-1 text-[#c49a3c] text-[10px] font-mono uppercase tracking-wider">
+                      <span class="relative flex h-1 w-1">
+                        <span class="absolute inline-flex h-full w-full rounded-full bg-[#c49a3c] opacity-40 animate-ping"></span>
+                        <span class="relative inline-flex h-1 w-1 rounded-full bg-[#c49a3c]"></span>
+                      </span>
+                      Current
+                    </span>
+                  )}
+                </div>
+
+                {/* Company */}
+                <p class="mt-1 text-sm text-stone-600">
+                  {role.company}
+                </p>
+
+                {/* Parent company + location */}
+                <p class="mt-0.5 text-xs text-stone-400">
+                  {[role.parentCompany, role.location].filter(Boolean).join(' · ')}
+                </p>
+
+                {/* Bullets */}
+                {role.bullets && role.bullets.length > 0 && (
+                  <ul class="mt-4 space-y-2 text-stone-600 leading-relaxed text-sm max-w-2xl">
+                    {role.bullets.map((bullet) => (
+                      <li class="flex gap-3">
+                        <span class="mt-2 inline-block w-1 h-1 rounded-full bg-stone-400 flex-shrink-0" aria-hidden="true"></span>
+                        <span>{bullet}</span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            </li>
+          );
+        })}
+      </ol>
+    </div>
+
+    {internCount > 0 && (
+      <p class="mt-10 text-xs text-stone-500">
+        Earlier internships at Allied Integrated Marketing, 20th Century Fox, and German Valdivia.
+        <a href={profile.linkedin} target="_blank" rel="noopener" class="text-stone-600 underline decoration-stone-300 underline-offset-4 hover:text-[#c49a3c] transition-colors ml-1">Full history →</a>
+      </p>
+    )}
+  </div>
+</section>
