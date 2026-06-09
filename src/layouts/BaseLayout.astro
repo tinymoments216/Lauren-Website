@@ -15,7 +15,7 @@ const fullTitle = title === profile.name ? title : `${title} — ${profile.name}
 ---
 
 <!doctype html>
-<html lang="en" class="scroll-smooth">
+<html lang="en" class="scroll-smooth overflow-x-hidden">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -38,7 +38,7 @@ const fullTitle = title === profile.name ? title : `${title} — ${profile.name}
     <!-- Grain overlay -->
     <div class="grain" aria-hidden="true"></div>
     
-    <main>
+    <main class="overflow-x-hidden">
       <slot />
     </main>
     <footer class="border-t border-stone-200 mt-24">
