@@ -73,13 +73,6 @@ const sorted: Video[] = [...videos].sort((a, b) => b.views - a.views);
         ))}
       </div>
     )}
-
-    {videos.some(isPlaceholder) && (
-      <p class="mt-8 text-xs text-stone-500 text-center">
-        <span class="inline-block w-1 h-1 rounded-full bg-[#c49a3c] align-middle mr-1.5"></span>
-        Sample placeholders. Add real video IDs in <code class="mx-1 px-1 py-0.5 rounded bg-stone-200 font-mono text-stone-600 text-xs">src/data/videos.ts</code>
-      </p>
-    )}
   </div>
 
   <!-- Video Modal -->
@@ -119,10 +112,14 @@ const sorted: Video[] = [...videos].sort((a, b) => b.views - a.views);
 
 <script>
   const videos = [
-    { id: 'EXAMPLE_FEATURED', provider: 'youtube', title: 'Sample: A flagship digital campaign for a major theatrical release', role: 'Manager, Digital Marketing', brand: 'The Walt Disney Studios', year: 2024, views: 1240000, url: 'https://www.youtube.com', description: 'Owned end-to-end digital campaign strategy and execution for a tentpole release across social, paid, and partner channels.' },
-    { id: 'EXAMPLE_2', provider: 'youtube', title: 'Sample: New-series launch campaign', role: 'Development Manager', brand: 'Marvel Entertainment', year: 2023, views: 820000, url: 'https://www.youtube.com', description: 'Managed an 8-title development slate, advancing 6 projects to greenlight-ready stage with A-list talent.' },
-    { id: 'EXAMPLE_3', provider: 'youtube', title: 'Sample: Streaming-first franchise piece', role: 'Associate Development Manager, New Media', brand: 'Marvel Entertainment', year: 2021, views: 540000, url: 'https://www.youtube.com', description: 'Developed 15+ pitch concepts annually for Disney+ and Hulu, with 3 advancing to active development.' },
-    { id: 'EXAMPLE_4', provider: 'youtube', title: 'Sample: Unscripted pilot sizzle', role: 'Development Associate', brand: 'Leftfield Pictures', year: 2018, views: 310000, url: 'https://www.youtube.com', description: 'Developed 20+ unscripted series concepts for History, A&E, and Discovery; 3 advanced to pilot.' },
+    { id: 'JuZIV-0u1XA', provider: 'youtube', title: 'Featured Campaign', role: 'Manager, Digital Marketing', brand: 'The Walt Disney Studios', year: 2024, views: 1240000, url: 'https://www.youtube.com/watch?v=JuZIV-0u1XA', description: 'Owned end-to-end digital campaign strategy and execution for a tentpole release across social, paid, and partner channels.' },
+    { id: 'Q9laRy5OYW8', provider: 'youtube', title: 'New-Series Launch Campaign', role: 'Development Manager', brand: 'Marvel Entertainment', year: 2023, views: 820000, url: 'https://www.youtube.com/watch?v=Q9laRy5OYW8', description: 'Managed an 8-title development slate, advancing 6 projects to greenlight-ready stage with A-list talent.' },
+    { id: 'NvKt71-ZSlo', provider: 'youtube', title: 'Streaming-First Franchise Piece', role: 'Associate Development Manager, New Media', brand: 'Marvel Entertainment', year: 2021, views: 540000, url: 'https://www.youtube.com/watch?v=NvKt71-ZSlo', description: 'Developed 15+ pitch concepts annually for Disney+ and Hulu, with 3 advancing to active development.' },
+    { id: 'ov6e_rLn4-Q', provider: 'youtube', title: 'Unscripted Pilot Sizzle', role: 'Development Associate', brand: 'Leftfield Pictures', year: 2018, views: 310000, url: 'https://www.youtube.com/watch?v=ov6e_rLn4-Q', description: 'Developed 20+ unscripted series concepts for History, A&E, and Discovery; 3 advanced to pilot.' },
+    { id: 'pQBgS6nc3s0', provider: 'youtube', title: 'Campaign Feature', role: 'Manager, Digital Marketing', brand: 'The Walt Disney Studios', year: 2023, views: 450000, url: 'https://www.youtube.com/watch?v=pQBgS6nc3s0' },
+    { id: 'UkvEp0KJ0po', provider: 'youtube', title: 'Franchise Campaign', role: 'Development Manager', brand: 'Marvel Entertainment', year: 2022, views: 380000, url: 'https://www.youtube.com/watch?v=UkvEp0KJ0po' },
+    { id: 'b9TFA3mj19c', provider: 'youtube', title: 'Series Launch', role: 'Associate Development Manager', brand: 'Marvel Entertainment', year: 2020, views: 290000, url: 'https://www.youtube.com/watch?v=b9TFA3mj19c' },
+    { id: 'i21vVea0I2Y', provider: 'youtube', title: 'Short Form Content', role: 'Digital Marketing', brand: 'The Walt Disney Studios', year: 2024, views: 150000, url: 'https://www.youtube.com/shorts/i21vVea0I2Y' },
   ];
 
   function embedUrl(video) {
