@@ -42,18 +42,17 @@ const cardOffsets = [5, -6, 5, -4];
             class="hero__image"
             style={`--delay:${i};--offsetX:${(i - 1.5) * 20}px;--offsetY:${cardOffsets[i]}%;--rotation:${cardRotations[i]}`}
           >
-            <div class="shadow"></div>
             <img
               src={src}
               alt=""
-              class="w-full h-full object-cover rounded-xl"
+              class="w-full h-full object-cover rounded-xl shadow-lg"
               loading="eager"
             />
           </div>
         ))}
       </div>
 
-      <h2 class="mt-6 font-display text-[clamp(2.5rem,6vw,5rem)] font-normal leading-[0.95] tracking-tight text-stone-400 select-none">
+      <h2 class="mt-2 font-display text-[clamp(2.5rem,6vw,5rem)] font-normal leading-[0.95] tracking-tight text-stone-400 select-none">
         {'Digital Marketing & Creative Development'.split(' ').map((word, i) => (
           <span class="word" style={`--delay:${i + 2}`}>
             {word}
@@ -130,7 +129,7 @@ const cardOffsets = [5, -6, 5, -4];
     align-items: center;
     display: flex;
     flex-direction: column;
-    gap: min(4rem, 6cqb);
+    gap: min(3rem, 5cqb);
   }
 
   .hero__mid h1 .word,
@@ -169,7 +168,6 @@ const cardOffsets = [5, -6, 5, -4];
   .hero__images .hero__image {
     aspect-ratio: 1/1;
     border-radius: 1rem;
-    display: grid;
     width: clamp(6rem, 100%, 14cqi);
     transition: rotate 0.15s ease-out;
     will-change: rotate;
@@ -181,33 +179,26 @@ const cardOffsets = [5, -6, 5, -4];
     }
   }
 
-  .hero__images .hero__image .shadow {
-    box-shadow: 0px 9px 21px rgba(0,0,0,0.1), 0px 38px 38px rgba(0,0,0,0.09), 0px 85px 51px rgba(0,0,0,0.05);
+  .hero__images .hero__image img {
     border-radius: inherit;
-    grid-area: 1/1;
+    box-shadow: 0px 9px 21px rgba(0,0,0,0.1), 0px 38px 38px rgba(0,0,0,0.09), 0px 85px 51px rgba(0,0,0,0.05);
+    pointer-events: auto;
   }
 
-  .hero__images .hero__image:nth-child(1) .shadow {
+  .hero__images .hero__image:nth-child(1) img {
     translate: calc(var(--offsetX, 0px)) calc(var(--offsetY, 0%) + 5%);
   }
 
-  .hero__images .hero__image:nth-child(2) .shadow {
+  .hero__images .hero__image:nth-child(2) img {
     translate: calc(var(--offsetX, 0px)) calc(var(--offsetY, 0%) - 6%);
   }
 
-  .hero__images .hero__image:nth-child(3) .shadow {
+  .hero__images .hero__image:nth-child(3) img {
     translate: calc(var(--offsetX, 0px)) calc(var(--offsetY, 0%) + 5%);
   }
 
-  .hero__images .hero__image:nth-child(4) .shadow {
+  .hero__images .hero__image:nth-child(4) img {
     translate: calc(var(--offsetX, 0px)) calc(var(--offsetY, 0%) - 4%);
-  }
-
-  .hero__images .hero__image img {
-    border-radius: inherit;
-    grid-area: 1/1;
-    translate: calc(var(--offsetX, 0px)) calc(var(--offsetY, 0%));
-    pointer-events: auto;
   }
 
   .hero__images .hero__image:nth-child(1) {
@@ -227,7 +218,7 @@ const cardOffsets = [5, -6, 5, -4];
   }
 
   .hero__images .hero__image:not(:last-child) {
-    margin-right: -6%;
+    margin-right: -12%;
   }
 
   .hero:not([mounted=true]) .hero__images .hero__image {
@@ -249,6 +240,11 @@ const cardOffsets = [5, -6, 5, -4];
     transition: 1s scale var(--ease-out-elastic, cubic-bezier(0.175, 0.885, 0.32, 1.275)),
                 0.15s rotate ease-out;
     transition-delay: calc(var(--delay) * 0.08s + 0.4s), 0s;
+  }
+
+  .hero[mounted=true] .hero__images .hero__image img {
+    transition: 1s scale var(--ease-out-elastic, cubic-bezier(0.175, 0.885, 0.32, 1.275));
+    transition-delay: calc(var(--delay) * 0.08s + 0.4s);
   }
 
   .hero[mounted=true] .hero__mid h1 .word,
