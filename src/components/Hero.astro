@@ -267,27 +267,41 @@ const cardOffsets = [5, -6, 5, -4];
     });
   });
 
-  // Velocity-based rotation effect
+  // Smooth velocity-based rotation effect
   let lastX = 0;
-  let velocity = 0;
+  let currentVelocity = 0;
+  let targetVelocity = 0;
   let animationFrame;
+
+  function updateVelocity() {
+    // Smooth interpolation toward target velocity
+    currentVelocity += (targetVelocity - currentVelocity) * 0.1;
+    
+    // Apply very small values as 0 to prevent micro-stuttering
+    if (Math.abs(currentVelocity) < 0.5) {
+      currentVelocity = 0;
+    }
+    
+    hero.style.setProperty('--velocity', currentVelocity);
+    
+    // Continue animation if there's still movement
+    if (Math.abs(currentVelocity) > 0.1 || Math.abs(targetVelocity) > 0.1) {
+      animationFrame = requestAnimationFrame(updateVelocity);
+    }
+  }
 
   hero.addEventListener('mousemove', (e) => {
     const currentX = e.clientX;
-    velocity = currentX - lastX;
+    targetVelocity = currentX - lastX;
     lastX = currentX;
 
-    hero.style.setProperty('--velocity', velocity);
-
-    cancelAnimationFrame(animationFrame);
-    animationFrame = requestAnimationFrame(() => {
-      velocity *= 0.9; // Decay
-      hero.style.setProperty('--velocity', velocity);
-    });
+    // Start animation loop if not running
+    if (!animationFrame) {
+      animationFrame = requestAnimationFrame(updateVelocity);
+    }
   });
 
   hero.addEventListener('mouseleave', () => {
-    velocity = 0;
-    hero.style.setProperty('--velocity', 0);
+    targetVelocity = 0;
   });
 </script>
