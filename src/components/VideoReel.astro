@@ -36,15 +36,10 @@ const sorted: Video[] = [...videos].sort((a, b) => b.views - a.views);
               <div class="work-card__frame relative aspect-video overflow-hidden rounded-xl bg-stone-200 ring-1 ring-stone-200 group-hover:ring-[#c49a3c] transition-all duration-300">
                 {isPlaceholder(video) ? (
                   <div class="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-stone-800 to-stone-950">
-                    <div class="relative flex items-center justify-center">
-                      <span class="play-ripple"></span>
-                      <span class="play-ripple"></span>
-                      <span class="play-ripple"></span>
-                      <div class="play-button w-16 h-16 rounded-full bg-stone-900/80 backdrop-blur-sm flex items-center justify-center ring-2 ring-[#c49a3c]/60 group-hover:bg-stone-800/80 transition-colors">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="#c49a3c" aria-hidden="true">
-                          <path d="M8 5v14l11-7z" />
-                        </svg>
-                      </div>
+                    <div class="w-14 h-14 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center ring-1 ring-white/20 group-hover:bg-white/20 transition-colors">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="#c49a3c" aria-hidden="true">
+                        <path d="M8 5v14l11-7z" />
+                      </svg>
                     </div>
                   </div>
                 ) : (
