@@ -54,6 +54,8 @@ export const videos: Video[] = [
     year: 2023,
     views: 820_000,
     url: 'https://www.youtube.com',
+    description:
+      'Managed an 8-title development slate, advancing 6 projects to greenlight-ready stage with A-list talent.',
   },
   {
     id: 'EXAMPLE_3',
@@ -64,6 +66,8 @@ export const videos: Video[] = [
     year: 2021,
     views: 540_000,
     url: 'https://www.youtube.com',
+    description:
+      'Developed 15+ pitch concepts annually for Disney+ and Hulu, with 3 advancing to active development.',
   },
   {
     id: 'EXAMPLE_4',
@@ -74,6 +78,8 @@ export const videos: Video[] = [
     year: 2018,
     views: 310_000,
     url: 'https://www.youtube.com',
+    description:
+      'Developed 20+ unscripted series concepts for History, A&E, and Discovery; 3 advanced to pilot.',
   },
 ];
 

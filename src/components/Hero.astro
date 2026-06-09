@@ -8,10 +8,10 @@ const cardImages = [
   '/cards/droid.png',
 ];
 const cardPositions = [
-  { rotateY: -22, rotateZ: -8, x: -75, mdX: -120, depth: -60, z: 1 },
-  { rotateY: -10, rotateZ: -3, x: -25, mdX: -40, depth: -25, z: 2 },
-  { rotateY: 10, rotateZ: 3, x: 25, mdX: 40, depth: 10, z: 3 },
-  { rotateY: 22, rotateZ: 8, x: 75, mdX: 120, depth: 35, z: 4 },
+  { rotateY: -15, rotateZ: -6, x: -60, mdX: -90, depth: -20, z: 1 },
+  { rotateY: -5, rotateZ: -2, x: -20, mdX: -30, depth: -10, z: 2 },
+  { rotateY: 5, rotateZ: 2, x: 20, mdX: 30, depth: 0, z: 3 },
+  { rotateY: 15, rotateZ: 6, x: 60, mdX: 90, depth: 10, z: 4 },
 ];
 ---
 
@@ -29,7 +29,7 @@ const cardPositions = [
       Lauren Wiener
     </h1>
 
-    <div class="mt-6 flex items-center justify-center">
+    <div class="mt-8 flex items-center justify-center">
       <div class="card-scene relative w-full h-40 md:w-[44rem] md:h-64">
         {cardImages.map((src, i) => {
           const pos = cardPositions[i];
