@@ -121,6 +121,16 @@ export const videos: Video[] = [
     views: 150_000,
     url: 'https://www.youtube.com/shorts/i21vVea0I2Y',
   },
+  {
+    id: '1ODhWjCxydU',
+    provider: 'youtube',
+    title: 'Campaign Feature',
+    role: 'Digital Marketing',
+    brand: 'The Walt Disney Studios',
+    year: 2024,
+    views: 200_000,
+    url: 'https://www.youtube.com/watch?v=1ODhWjCxydU',
+  },
 ];
 
 export function totalViews(items: Video[]): number {
