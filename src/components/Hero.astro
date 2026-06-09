@@ -7,184 +7,287 @@ const cardImages = [
   '/cards/moana.png',
   '/cards/droid.png',
 ];
-const cardPositions = [
-  { rotateY: -15, rotateZ: -6, x: -60, mdX: -90, depth: -20, z: 1 },
-  { rotateY: -5, rotateZ: -2, x: -20, mdX: -30, depth: -10, z: 2 },
-  { rotateY: 5, rotateZ: 2, x: 20, mdX: 30, depth: 0, z: 3 },
-  { rotateY: 15, rotateZ: 6, x: 60, mdX: 90, depth: 10, z: 4 },
-];
+const cardRotations = [2, -3, 6, -2];
+const cardOffsets = [5, -6, 5, -4];
 ---
 
-<section id="top" class="pt-20 md:pt-28 pb-8 text-center px-3 md:px-4 overflow-x-hidden">
+<section id="top" class="hero pt-20 md:pt-28 pb-8 text-center px-3 md:px-4 overflow-x-hidden" mounted="false">
   <div class="max-w-5xl mx-auto">
 
-    <p class="font-mono text-[11px] uppercase tracking-[0.3em] text-stone-500">
-      {profile.location}
-    </p>
-    <p class="font-mono text-[10px] uppercase tracking-[0.25em] text-stone-400 mt-1">
-      <a href={`mailto:${profile.email}`} class="hover:text-[#c49a3c] transition-colors">{profile.email}</a>
-    </p>
-
-    <h1 class="mt-10 font-display text-[clamp(3rem,12vw,9rem)] font-bold leading-[0.85] tracking-tight text-stone-900">
-      Lauren Wiener
-    </h1>
-
-    <div class="mt-8 flex items-center justify-center">
-      <div class="card-scene relative w-full h-40 md:w-[44rem] md:h-64">
-        {cardImages.map((src, i) => {
-          const pos = cardPositions[i];
-          return (
-            <div
-              class="card absolute w-28 h-36 md:w-36 md:h-48 rounded-xl shadow-2xl overflow-hidden ring-1 ring-stone-200 cursor-pointer group"
-              style={`left:50%;top:50%;--card-rotateY:${pos.rotateY}deg;--card-rotateZ:${pos.rotateZ}deg;--card-x:${pos.x}px;--card-md-x:${pos.mdX}px;--card-depth:${pos.depth}px;z-index:${pos.z}`}
-            >
-              <img
-                src={src}
-                alt=""
-                class="w-full h-full object-cover"
-                loading="eager"
-              />
-            </div>
-          );
-        })}
-      </div>
+    <!-- Top section -->
+    <div class="hero__top">
+      <p class="font-mono text-[11px] uppercase tracking-[0.3em] text-stone-500">
+        {profile.location}
+      </p>
+      <p class="font-mono text-[10px] uppercase tracking-[0.25em] text-stone-400 mt-1">
+        <a href={`mailto:${profile.email}`} class="hover:text-[#c49a3c] transition-colors">{profile.email}</a>
+      </p>
     </div>
 
-    <h2 class="mt-6 font-display text-[clamp(2.5rem,6vw,5rem)] font-normal leading-[0.95] tracking-tight text-stone-400 select-none">
-      Digital Marketing & Creative Development
-    </h2>
+    <!-- Mid section with headline and cards -->
+    <div class="hero__mid">
+      <h1 class="mt-10 font-display text-[clamp(3rem,12vw,9rem)] font-bold leading-[0.85] tracking-tight text-stone-900">
+        {profile.name.split(' ').map((word, i) => (
+          <span class="word" style={`--delay:${i}`}>
+            {word}
+            {i < profile.name.split(' ').length - 1 && <span class="space"></span>}
+          </span>
+        ))}
+      </h1>
 
-    <div class="mt-14 md:mt-16">
-      <p class="font-mono text-[10px] uppercase tracking-[0.3em] text-stone-400 mb-5">
-        Studios & Networks
-      </p>
-      <div class="flex items-center justify-center gap-6 md:gap-8 flex-wrap">
-        {[
-          { name: 'Disney', file: 'disney.png' },
-          { name: 'Marvel', file: 'marvel.png' },
-          { name: 'Pixar', file: 'pixar.png' },
-          { name: 'Lucasfilm', file: 'lucasfilm.png' },
-          { name: 'Leftfield Pictures', file: 'leftfield.png' },
-          { name: 'ITV', file: 'itv.png' },
-        ].map((brand) => (
-          <img
-            src={`/logos/${brand.file}`}
-            alt={brand.name}
-            class="h-10 md:h-12 w-auto opacity-80 hover:opacity-100 transition-opacity"
-            loading="lazy"
-          />
+      <!-- Card images -->
+      <div class="hero__images">
+        {cardImages.map((src, i) => (
+          <div
+            class="hero__image"
+            style={`--delay:${i};--offsetX:${(i - 1.5) * 20}px;--offsetY:${cardOffsets[i]}%;--rotation:${cardRotations[i]}`}
+          >
+            <div class="shadow"></div>
+            <img
+              src={src}
+              alt=""
+              class="w-full h-full object-cover rounded-xl"
+              loading="eager"
+            />
+          </div>
         ))}
       </div>
+
+      <h2 class="mt-6 font-display text-[clamp(2.5rem,6vw,5rem)] font-normal leading-[0.95] tracking-tight text-stone-400 select-none">
+        {'Digital Marketing & Creative Development'.split(' ').map((word, i) => (
+          <span class="word" style={`--delay:${i + 2}`}>
+            {word}
+            {i < 'Digital Marketing & Creative Development'.split(' ').length - 1 && <span class="space"></span>}
+          </span>
+        ))}
+      </h2>
     </div>
 
-    <p class="mt-12 max-w-2xl mx-auto text-base md:text-lg text-stone-600 leading-relaxed">
-      {profile.summary}
-    </p>
+    <!-- Bottom section -->
+    <div class="hero__bot">
+      <div class="mt-14 md:mt-16">
+        <p class="font-mono text-[10px] uppercase tracking-[0.3em] text-stone-400 mb-5">
+          Studios & Networks
+        </p>
+        <div class="flex items-center justify-center gap-6 md:gap-8 flex-wrap">
+          {[
+            { name: 'Disney', file: 'disney.png' },
+            { name: 'Marvel', file: 'marvel.png' },
+            { name: 'Pixar', file: 'pixar.png' },
+            { name: 'Lucasfilm', file: 'lucasfilm.png' },
+            { name: 'Leftfield Pictures', file: 'leftfield.png' },
+            { name: 'ITV', file: 'itv.png' },
+          ].map((brand) => (
+            <img
+              src={`/logos/${brand.file}`}
+              alt={brand.name}
+              class="h-10 md:h-12 w-auto opacity-80 hover:opacity-100 transition-opacity"
+              loading="lazy"
+            />
+          ))}
+        </div>
+      </div>
 
-    <div class="mt-8">
-      <a
-        href="#"
-        class="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-medium text-white bg-stone-900 hover:bg-[#c49a3c] transition-colors rounded-full"
-      >
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-          <polyline points="7 10 12 15 17 10" />
-          <line x1="12" y1="15" x2="12" y2="3" />
-        </svg>
-        View Resume
-      </a>
-    </div>
+      <p class="mt-12 max-w-2xl mx-auto text-base md:text-lg text-stone-600 leading-relaxed">
+        {profile.summary}
+      </p>
 
-    <div class="mt-3">
-      <a
-        href={profile.linkedin}
-        target="_blank"
-        rel="noopener"
-        class="text-sm text-stone-500 hover:text-[#c49a3c] transition-colors"
-      >
-        View my LinkedIn
-      </a>
+      <div class="mt-8">
+        <a
+          href="#"
+          class="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-medium text-white bg-stone-900 hover:bg-[#c49a3c] transition-colors rounded-full"
+        >
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+            <polyline points="7 10 12 15 17 10" />
+            <line x1="12" y1="15" x2="12" y2="3" />
+          </svg>
+          View Resume
+        </a>
+      </div>
+
+      <div class="mt-3">
+        <a
+          href={profile.linkedin}
+          target="_blank"
+          rel="noopener"
+          class="text-sm text-stone-500 hover:text-[#c49a3c] transition-colors"
+        >
+          View my LinkedIn
+        </a>
+      </div>
     </div>
 
   </div>
 </section>
 
 <style>
-  .card-scene {
-    perspective: 1200px;
-    transform-style: preserve-3d;
+  .hero {
+    container: hero/inline-block;
   }
 
-  .card {
-    pointer-events: none;
-    transform: translate(-50%, -50%) translateX(var(--card-x, 0px)) rotateY(var(--card-rotateY, 0deg)) rotateZ(var(--card-rotateZ, 0deg)) translateZ(var(--card-depth, 0px));
-    transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.6s ease, z-index 0s step-start;
-    transform-origin: center bottom;
+  .hero__mid {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    gap: min(4rem, 6cqb);
   }
 
-  .card.active {
-    pointer-events: auto;
+  .hero__mid h1 .word,
+  .hero__mid h2 .word {
+    display: inline-block;
+    transform-origin: bottom;
+    will-change: transform;
   }
 
-  @media (min-width: 768px) {
-    .card {
-      transform: translate(-50%, -50%) translateX(var(--card-md-x, var(--card-x, 0px))) rotateY(var(--card-rotateY, 0deg)) rotateZ(var(--card-rotateZ, 0deg)) translateZ(var(--card-depth, 0px));
+  @starting-style {
+    .hero__mid h1 .word,
+    .hero__mid h2 .word {
+      scale: 1 0;
     }
   }
 
-  .card:hover {
-    z-index: 50 !important;
-    transform: translate(-50%, -50%) translateX(var(--card-md-x, var(--card-x, 0px))) rotateY(0deg) rotateZ(0deg) translateZ(calc(var(--card-depth, 0px) + 80px)) scale(1.15);
-    box-shadow: 0 40px 80px -12px rgba(0, 0, 0, 0.4);
-    transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.5s ease, z-index 0s step-start;
+  .hero__mid h1 .space,
+  .hero__mid h2 .space {
+    display: inline-block;
+    height: 1em;
+    width: 0.3ch;
+  }
+
+  .hero__images {
+    display: flex;
+    place-items: center;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    position: relative;
+    touch-action: none;
+    width: 100%;
+    z-index: 1;
+  }
+
+  .hero__images .hero__image {
+    aspect-ratio: 1/1;
+    border-radius: 1rem;
+    display: grid;
+    width: clamp(6rem, 100%, 14cqi);
+  }
+
+  @starting-style {
+    .hero__images .hero__image {
+      scale: 0;
+    }
+  }
+
+  .hero__images .hero__image .shadow {
+    box-shadow: 0px 9px 21px rgba(0,0,0,0.1), 0px 38px 38px rgba(0,0,0,0.09), 0px 85px 51px rgba(0,0,0,0.05);
+    border-radius: inherit;
+    grid-area: 1/1;
+    translate: calc(var(--offsetX, 0px)) calc(var(--offsetY, 0%) + 5%);
+  }
+
+  .hero__images .hero__image img {
+    border-radius: inherit;
+    grid-area: 1/1;
+    translate: calc(var(--offsetX, 0px)) calc(var(--offsetY, 0%));
+    pointer-events: auto;
+  }
+
+  .hero__images .hero__image:nth-child(1) * {
+    rotate: calc(2deg - var(--velocity, 0) * 0.25deg);
+    --translateY: 5%;
+  }
+
+  .hero__images .hero__image:nth-child(2) * {
+    rotate: calc(-3deg - var(--velocity, 0) * 0.25deg);
+    --translateY: -6%;
+  }
+
+  .hero__images .hero__image:nth-child(3) * {
+    rotate: calc(6deg - var(--velocity, 0) * 0.25deg);
+    --translateY: 5%;
+  }
+
+  .hero__images .hero__image:nth-child(4) * {
+    rotate: calc(-2deg - var(--velocity, 0) * 0.25deg);
+    --translateY: -4%;
+  }
+
+  .hero__images .hero__image:not(:last-child) {
+    margin-right: -6%;
+  }
+
+  .hero:not([mounted=true]) .hero__images .hero__image {
+    scale: 0;
+  }
+
+  .hero:not([mounted=true]) .hero__mid h1 .word,
+  .hero:not([mounted=true]) .hero__mid h2 .word {
+    scale: 1 0;
+    translate: 0 0.25ch;
+  }
+
+  .hero:not([mounted=true]) .hero__bot,
+  .hero:not([mounted=true]) .hero__top {
+    opacity: 0;
+  }
+
+  .hero[mounted=true] .hero__images .hero__image {
+    transition: 1s scale var(--ease-out-elastic, cubic-bezier(0.175, 0.885, 0.32, 1.275));
+    transition-delay: calc(var(--delay) * 0.08s + 0.4s);
+  }
+
+  .hero[mounted=true] .hero__mid h1 .word,
+  .hero[mounted=true] .hero__mid h2 .word {
+    transition: 0.8s scale var(--ease-out-elastic, cubic-bezier(0.175, 0.885, 0.32, 1.275)),
+                0.8s translate var(--ease-out-elastic, cubic-bezier(0.175, 0.885, 0.32, 1.275));
+    transition-delay: calc(var(--delay) * 0.1s);
+  }
+
+  .hero[mounted=true] .hero__bot,
+  .hero[mounted=true] .hero__top {
+    transition: 1.2s opacity var(--ease-out-sine, cubic-bezier(0.39, 0.575, 0.565, 1));
+    transition-delay: 0.25s;
+  }
+
+  @media (min-width: 768px) {
+    .hero__images .hero__image {
+      width: clamp(8rem, 12cqi, 16rem);
+    }
   }
 </style>
 
 <script>
-  const scene = document.querySelector('.card-scene');
-  const cards = document.querySelectorAll('.card');
-
-  function updateActiveCard(x, y) {
-    let active = null;
-
-    // Check cards in reverse z-index order (top to bottom)
-    for (let i = cards.length - 1; i >= 0; i--) {
-      const card = cards[i];
-      const cRect = card.getBoundingClientRect();
-      if (x >= cRect.left && x <= cRect.right && y >= cRect.top && y <= cRect.bottom) {
-        active = card;
-        break;
-      }
-    }
-
-    cards.forEach(c => c.classList.remove('active'));
-    if (active) active.classList.add('active');
-  }
-
-  scene.addEventListener('mousemove', (e) => updateActiveCard(e.clientX, e.clientY));
+  const hero = document.querySelector('.hero');
   
-  scene.addEventListener('mouseleave', () => {
-    setTimeout(() => {
-      cards.forEach(c => c.classList.remove('active'));
-    }, 100);
+  // Trigger animations after mount
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      hero.setAttribute('mounted', 'true');
+    });
   });
 
-  // Mobile touch support
-  let touchTimeout;
-  scene.addEventListener('touchstart', (e) => {
-    const t = e.touches[0];
-    updateActiveCard(t.clientX, t.clientY);
-  }, { passive: true });
+  // Velocity-based rotation effect
+  let lastX = 0;
+  let velocity = 0;
+  let animationFrame;
 
-  scene.addEventListener('touchmove', (e) => {
-    const t = e.touches[0];
-    updateActiveCard(t.clientX, t.clientY);
-  }, { passive: true });
+  hero.addEventListener('mousemove', (e) => {
+    const currentX = e.clientX;
+    velocity = currentX - lastX;
+    lastX = currentX;
 
-  scene.addEventListener('touchend', () => {
-    clearTimeout(touchTimeout);
-    touchTimeout = setTimeout(() => {
-      cards.forEach(c => c.classList.remove('active'));
-    }, 300);
+    hero.style.setProperty('--velocity', velocity);
+
+    cancelAnimationFrame(animationFrame);
+    animationFrame = requestAnimationFrame(() => {
+      velocity *= 0.9; // Decay
+      hero.style.setProperty('--velocity', velocity);
+    });
+  });
+
+  hero.addEventListener('mouseleave', () => {
+    velocity = 0;
+    hero.style.setProperty('--velocity', 0);
   });
 </script>
