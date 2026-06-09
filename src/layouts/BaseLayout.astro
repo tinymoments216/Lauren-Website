@@ -67,8 +67,8 @@ const fullTitle = title === profile.name ? title : `${title} — ${profile.name}
           });
         });
 
-        // Flip-in scroll effect
-        const flipElements = document.querySelectorAll('.flip-in');
+        // Scroll reveal — flip-in sections + staggered work cards
+        const flipElements = document.querySelectorAll('.flip-in, .reveal');
         const flipObserver = new IntersectionObserver((entries) => {
           entries.forEach(entry => {
             if (entry.isIntersecting) {

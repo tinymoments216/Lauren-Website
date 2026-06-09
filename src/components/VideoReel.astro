@@ -26,14 +26,14 @@ const sorted: Video[] = [...videos].sort((a, b) => b.views - a.views);
     {hasVideos && (
       <div class="mt-10 space-y-10 max-w-2xl mx-auto">
         {sorted.map((video: Video, i: number) => (
-          <div class="group">
+          <div class="group work-card reveal" style={`--reveal-delay:${i * 0.09}s`}>
             <button
               type="button"
               class="block text-left w-full"
               data-video-index={i}
               aria-label={`Watch "${video.title}"`}
             >
-              <div class="relative aspect-video overflow-hidden rounded-xl bg-stone-200 ring-1 ring-stone-200 group-hover:ring-[#c49a3c] transition-all duration-300">
+              <div class="work-card__frame relative aspect-video overflow-hidden rounded-xl bg-stone-200 ring-1 ring-stone-200 group-hover:ring-[#c49a3c] transition-all duration-300">
                 {isPlaceholder(video) ? (
                   <div class="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-stone-800 to-stone-950">
                     <div class="relative flex items-center justify-center">

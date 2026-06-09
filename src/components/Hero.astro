@@ -169,7 +169,7 @@ const cardOffsets = [5, -6, 5, -4];
     aspect-ratio: 1/1;
     border-radius: 1rem;
     width: clamp(6rem, 100%, 14cqi);
-    transition: rotate 0.15s ease-out;
+    transition: rotate 0.25s cubic-bezier(0.22, 1, 0.36, 1);
     will-change: rotate;
   }
 
@@ -202,19 +202,19 @@ const cardOffsets = [5, -6, 5, -4];
   }
 
   .hero__images .hero__image:nth-child(1) {
-    rotate: calc(2deg - var(--velocity, 0) * 0.25deg);
+    rotate: calc(2deg - var(--velocity, 0) * 0.34deg);
   }
 
   .hero__images .hero__image:nth-child(2) {
-    rotate: calc(-3deg - var(--velocity, 0) * 0.25deg);
+    rotate: calc(-3deg - var(--velocity, 0) * 0.20deg);
   }
 
   .hero__images .hero__image:nth-child(3) {
-    rotate: calc(6deg - var(--velocity, 0) * 0.25deg);
+    rotate: calc(6deg - var(--velocity, 0) * 0.22deg);
   }
 
   .hero__images .hero__image:nth-child(4) {
-    rotate: calc(-2deg - var(--velocity, 0) * 0.25deg);
+    rotate: calc(-2deg - var(--velocity, 0) * 0.36deg);
   }
 
   .hero__images .hero__image:not(:last-child) {
@@ -277,41 +277,59 @@ const cardOffsets = [5, -6, 5, -4];
     });
   });
 
-  // Smooth velocity-based rotation effect
-  let lastX = 0;
-  let currentVelocity = 0;
-  let targetVelocity = 0;
-  let animationFrame;
+  // Velocity-driven rotation: pointer speed tilts the card stack, then it
+  // springs back to rest. Time-normalized so it feels the same at any frame rate.
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  function updateVelocity() {
-    // Smooth interpolation toward target velocity
-    currentVelocity += (targetVelocity - currentVelocity) * 0.1;
-    
-    // Apply very small values as 0 to prevent micro-stuttering
-    if (Math.abs(currentVelocity) < 0.5) {
-      currentVelocity = 0;
+  if (!reduceMotion) {
+    const MAX = 55;        // clamp peak tilt input (prevents over-rotation on fast flicks)
+    const STIFFNESS = 0.10; // spring pull toward target
+    const DAMPING = 0.78;   // bleeds spring energy (lower = settles faster)
+    const DECAY = 0.86;     // target relaxes to 0 each frame when the pointer is still
+
+    let lastX = null;
+    let lastT = 0;
+    let target = 0;   // desired tilt input, decays to 0 when idle
+    let current = 0;  // smoothed value written to --velocity
+    let spring = 0;   // spring velocity
+    let raf = null;
+
+    function loop() {
+      target *= DECAY;
+      spring = (spring + (target - current) * STIFFNESS) * DAMPING;
+      current += spring;
+
+      // Rest: snap to 0 and stop the loop so it never spins idle
+      if (Math.abs(current) < 0.04 && Math.abs(target) < 0.04 && Math.abs(spring) < 0.04) {
+        current = 0;
+        hero.style.setProperty('--velocity', '0');
+        raf = null;
+        return;
+      }
+
+      hero.style.setProperty('--velocity', current.toFixed(2));
+      raf = requestAnimationFrame(loop);
     }
-    
-    hero.style.setProperty('--velocity', currentVelocity);
-    
-    // Continue animation if there's still movement
-    if (Math.abs(currentVelocity) > 0.1 || Math.abs(targetVelocity) > 0.1) {
-      animationFrame = requestAnimationFrame(updateVelocity);
+
+    function kick() {
+      if (!raf) raf = requestAnimationFrame(loop);
     }
+
+    hero.addEventListener('pointermove', (e) => {
+      const now = e.timeStamp || performance.now();
+      if (lastX !== null) {
+        const dt = Math.max(now - lastT, 8);   // ms; floor avoids divide-by-tiny spikes
+        const v = ((e.clientX - lastX) / dt) * 16; // px per ~frame, frame-rate independent
+        target = Math.max(-MAX, Math.min(MAX, v));
+      }
+      lastX = e.clientX;
+      lastT = now;
+      kick();
+    });
+
+    // Release tension when the pointer leaves or lifts
+    const release = () => { target = 0; lastX = null; kick(); };
+    hero.addEventListener('pointerleave', release);
+    hero.addEventListener('pointerup', release);
   }
-
-  hero.addEventListener('mousemove', (e) => {
-    const currentX = e.clientX;
-    targetVelocity = currentX - lastX;
-    lastX = currentX;
-
-    // Start animation loop if not running
-    if (!animationFrame) {
-      animationFrame = requestAnimationFrame(updateVelocity);
-    }
-  });
-
-  hero.addEventListener('mouseleave', () => {
-    targetVelocity = 0;
-  });
 </script>

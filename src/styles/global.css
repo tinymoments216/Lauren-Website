@@ -165,6 +165,65 @@
     transform: translateX(0) rotateY(0);
   }
 
+  /* Scroll reveal — fade + rise as the element enters the viewport (staggered via --reveal-delay) */
+  .reveal {
+    opacity: 0;
+    transform: translateY(28px) scale(0.985);
+    transition:
+      opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    transition-delay: var(--reveal-delay, 0s);
+    will-change: opacity, transform;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+
+  /* Work card — hover lift + scale with soft shadow (spencergabor-style) */
+  .work-card {
+    transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .work-card__frame {
+    transition:
+      box-shadow 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+      ring-color 0.3s ease;
+  }
+
+  @media (hover: hover) {
+    .work-card:hover {
+      transform: translateY(-10px) scale(1.02);
+    }
+
+    .work-card:hover .work-card__frame {
+      box-shadow:
+        0 22px 38px -14px rgba(28, 25, 23, 0.30),
+        0 10px 16px -10px rgba(196, 154, 60, 0.28);
+    }
+  }
+
+  /* Touch feedback on mobile (no hover) */
+  @media (hover: none) {
+    .work-card:active {
+      transform: scale(0.99);
+      transition-duration: 0.15s;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reveal {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+    .work-card,
+    .work-card:hover {
+      transform: none;
+    }
+  }
+
   /* Photo hover effect */
   .photo-hover {
     transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
