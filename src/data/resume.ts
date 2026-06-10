@@ -150,8 +150,6 @@ export const skills = {
     'Social media',
     'Brand partnerships',
     'Audience development',
-    'Analytics & reporting',
-    'Public relations',
   ],
   'Creative Development': [
     'Pitch decks & treatments',
