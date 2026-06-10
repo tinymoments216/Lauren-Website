@@ -69,21 +69,21 @@ const cardOffsets = [5, -6, 5, -4];
           Studios & Networks
         </p>
         <div class="flex items-center justify-center gap-6 md:gap-8 flex-wrap">
-          {[
-            { name: 'Disney', file: 'disney.png' },
-            { name: 'Marvel', file: 'marvel.png' },
-            { name: 'Pixar', file: 'pixar.png' },
-            { name: 'Lucasfilm', file: 'lucasfilm.png' },
-            { name: 'Leftfield Pictures', file: 'leftfield.png' },
-            { name: 'ITV', file: 'itv.png' },
-          ].map((brand) => (
-            <img
-              src={`/logos/${brand.file}`}
-              alt={brand.name}
-              class="h-10 md:h-12 w-auto opacity-80 hover:opacity-100 transition-opacity"
-              loading="lazy"
-            />
-          ))}
+        {[
+          { name: 'Disney', file: 'disney.png' },
+          { name: 'Marvel', file: 'marvel.png' },
+          { name: 'Pixar', file: 'pixar.png' },
+          { name: 'Lucasfilm', file: 'lucasfilm.png' },
+          { name: 'Leftfield Pictures', file: 'leftfield.png', large: true },
+          { name: 'ITV', file: 'itv.png' },
+        ].map((brand) => (
+          <img
+            src={`/logos/${brand.file}`}
+            alt={brand.name}
+            class={`w-auto opacity-80 hover:opacity-100 transition-opacity ${brand.large ? 'h-14 md:h-16' : 'h-10 md:h-12'}`}
+            loading="lazy"
+          />
+        ))}
         </div>
       </div>
 
@@ -93,7 +93,9 @@ const cardOffsets = [5, -6, 5, -4];
 
       <div class="mt-8">
         <a
-          href="#"
+          href="/resume.pdf"
+        target="_blank"
+        rel="noopener"
           class="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-medium text-white bg-stone-900 hover:bg-[#c49a3c] transition-colors rounded-full"
         >
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
