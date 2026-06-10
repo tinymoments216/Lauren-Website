@@ -10,7 +10,7 @@ export const profile = {
   website: undefined as string | undefined,
   linkedin: 'https://www.linkedin.com/in/lauren-wiener-a6b27991/',
   currently: 'Looking for the next chapter — let\'s talk.', // ← edit me
-  interests: ['Film', 'Television', 'Tennis', 'Golf'], // ← edit me
+  interests: ['Film', 'Television', 'Tennis', 'Golf', 'News & pop culture junkie'], // ← edit me
   signature: 'Lauren', // ← name rendered as italic sign-off in the hero
   summary:
     "Digital marketing and creative development leader with 13+ years shaping stories for the world's biggest entertainment brands, including 7+ years at The Walt Disney Company (Walt Disney Studios and Marvel Entertainment). From network pitch decks to premiere campaigns, I lead high-stakes work end-to-end: setting strategy, building teams, producing campaigns, and developing the IP and formats that move a slate forward. NYC-based.",
