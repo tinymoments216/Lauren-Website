@@ -154,7 +154,6 @@ export const skills = {
   'Creative Development': [
     'Pitch decks & treatments',
     'Sizzle reels',
-    'Network presentations',
     'Story development',
     'On-set coordination',
     'New media strategy',
