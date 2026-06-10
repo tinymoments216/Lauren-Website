@@ -131,6 +131,16 @@ export const videos: Video[] = [
     views: 200_000,
     url: 'https://www.youtube.com/watch?v=1ODhWjCxydU',
   },
+  {
+    id: 'EkqtaoJGSG8',
+    provider: 'youtube',
+    title: 'Mickey\'s Campout — Read Along',
+    role: 'Digital Marketing',
+    brand: 'Disney Kids',
+    year: 2024,
+    views: 180_000,
+    url: 'https://www.youtube.com/watch?v=EkqtaoJGSG8',
+  },
 ];
 
 export function totalViews(items: Video[]): number {
