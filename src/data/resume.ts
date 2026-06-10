@@ -13,7 +13,7 @@ export const profile = {
   interests: ['Film', 'Television', 'Tennis', 'Golf', 'News & Pop-Culture Junkie'], // ← edit me
   signature: 'Lauren', // ← name rendered as italic sign-off in the hero
   summary:
-    "Digital marketing and creative development leader with 13+ years shaping stories for the world's biggest entertainment brands, including 7+ years at The Walt Disney Company (Walt Disney Studios and Marvel Entertainment). From network pitch decks to premiere campaigns, I lead high-stakes work end-to-end: setting strategy, building teams, producing campaigns, and developing the IP and formats that move a slate forward. NYC-based.",
+    "Digital marketing and creative development leader with 13+ years shaping stories for the world's biggest entertainment brands, including 7+ years at The Walt Disney Company (Walt Disney Studios and Marvel Entertainment). From network pitch decks to premiere campaigns, I lead high-stakes work end-to-end: setting strategy, building teams, producing campaigns, and developing the IP and formats that move a slate forward.",
 };
 
 export const experience = [
