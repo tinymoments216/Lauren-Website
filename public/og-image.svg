@@ -9,19 +9,12 @@
   <!-- Background -->
   <rect width="1200" height="630" fill="url(#bg)"/>
 
-  <!-- Subtle decorative lines -->
-  <line x1="400" y1="230" x2="440" y2="230" stroke="#c49a3c" stroke-width="1.5" opacity="0.6"/>
-  <line x1="760" y1="230" x2="800" y2="230" stroke="#c49a3c" stroke-width="1.5" opacity="0.6"/>
-
-  <!-- Flower -->
-  <text x="600" y="238" text-anchor="middle" font-family="Georgia, serif" font-size="28" fill="#c49a3c">✿</text>
-
   <!-- Name -->
-  <text x="600" y="340" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="120" font-weight="bold" fill="#1c1917" letter-spacing="-2">Lauren Wiener</text>
+  <text x="600" y="300" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="120" font-weight="bold" fill="#1c1917" letter-spacing="-2">Lauren Wiener</text>
 
   <!-- Subtitle -->
-  <text x="600" y="410" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="24" font-weight="400" fill="#78716c" letter-spacing="4">DIGITAL MARKETING &amp; CREATIVE DEVELOPMENT</text>
+  <text x="600" y="370" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="24" font-weight="400" fill="#78716c" letter-spacing="4">DIGITAL MARKETING &amp; CREATIVE DEVELOPMENT</text>
 
   <!-- Bottom line -->
-  <text x="600" y="490" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#a8a29e" letter-spacing="6">laurenwiener.me</text>
+  <text x="600" y="450" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="400" fill="#a8a29e" letter-spacing="6">laurenwiener.me</text>
 </svg>
