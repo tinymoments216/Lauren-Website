@@ -33,7 +33,7 @@ const sorted: Video[] = [...videos].sort((a, b) => b.views - a.views);
             <button
               type="button"
               class="block text-left w-full"
-              data-video-index={i}
+              data-video-id={video.id}
               aria-label={`Watch "${video.title}"`}
             >
               <div class="work-card__frame relative aspect-video overflow-hidden rounded-xl bg-stone-200 ring-1 ring-stone-200 group-hover:ring-[#c49a3c] transition-all duration-300">
@@ -149,8 +149,8 @@ const sorted: Video[] = [...videos].sort((a, b) => b.views - a.views);
   const modalDescription = document.getElementById('modal-description');
   const closeBtn = document.getElementById('modal-close');
 
-  function openModal(index) {
-    const video = videos[index];
+  function openModal(id) {
+    const video = videos.find(v => v.id === id);
     if (!video) return;
 
     iframe.src = embedUrl(video);
@@ -172,11 +172,11 @@ const sorted: Video[] = [...videos].sort((a, b) => b.views - a.views);
     document.body.style.overflow = '';
   }
 
-  document.querySelectorAll('[data-video-index]').forEach(btn => {
+  document.querySelectorAll('[data-video-id]').forEach(btn => {
     btn.addEventListener('click', (e) => {
       e.preventDefault();
-      const index = parseInt(btn.getAttribute('data-video-index'));
-      openModal(index);
+      const id = btn.getAttribute('data-video-id');
+      openModal(id);
     });
   });
 
