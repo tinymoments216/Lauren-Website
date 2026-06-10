@@ -147,7 +147,6 @@ export const skills = {
   'Digital Marketing': [
     'Campaign strategy',
     'Content marketing',
-    'Social media',
     'Brand partnerships',
     'Audience development',
   ],
