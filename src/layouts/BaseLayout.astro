@@ -42,13 +42,8 @@ const fullTitle = title === profile.name ? title : `${title} — ${profile.name}
       <slot />
     </main>
     <footer class="border-t border-stone-200 mt-24">
-      <div class="container-tight flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 py-8 text-sm text-stone-500">
-        <p>© {new Date().getFullYear()} {profile.name}
-          <span class="ml-2 text-stone-400 italic">— made with care, in NYC.</span>
-        </p>
-        <p class="text-stone-400">
-          <a href={`mailto:${profile.email}`} class="hover:text-[#c49a3c] transition-colors">{profile.email}</a>
-        </p>
+      <div class="container-tight flex items-center justify-center py-8 text-sm text-stone-500">
+        <p>© {new Date().getFullYear()} {profile.name}</p>
       </div>
     </footer>
 
