@@ -1,0 +1,117 @@
+---
+import { profile, skills } from '../data/resume';
+
+const listening = [
+  { title: 'Add your current listens', detail: 'Artist / Podcast' },
+  { title: 'Add your current listens', detail: 'Artist / Podcast' },
+  { title: 'Add your current listens', detail: 'Artist / Podcast' },
+];
+
+const reading = [
+  { title: 'Add what you\'re reading', detail: 'Author' },
+  { title: 'Add what you\'re reading', detail: 'Author' },
+];
+
+const watching = [
+  { title: 'Add what you\'re watching', detail: 'Network / Platform' },
+  { title: 'Add what you\'re watching', detail: 'Network / Platform' },
+  { title: 'Add what you\'re watching', detail: 'Network / Platform' },
+];
+
+const allSkills = Object.values(skills).flat();
+---
+
+<section id="about" class="py-16 md:py-20 border-t border-stone-200 flip-in">
+  <div class="container-tight">
+    <p class="font-mono text-xs uppercase tracking-[0.25em] text-stone-500">
+      <span class="text-[#c49a3c] mr-2">✦</span> About
+    </p>
+    <h2 class="mt-3 font-display text-4xl md:text-5xl font-normal text-stone-900 tracking-tight">
+      A little about me.
+    </h2>
+
+    <div class="mt-10 flex flex-col md:flex-row gap-8 md:gap-12">
+      <!-- Photo -->
+      <div class="flex-shrink-0">
+        <div class="w-48 h-48 md:w-56 md:h-56 rounded-2xl overflow-hidden ring-4 ring-white shadow-lg">
+          <img
+            src="/lauren.jpeg"
+            alt={profile.name}
+            class="w-full h-full object-cover"
+          />
+        </div>
+      </div>
+
+      <!-- Content -->
+      <div class="flex-1 space-y-6">
+        <!-- Skills & Interests -->
+        <div>
+          <p class="font-mono text-[10px] uppercase tracking-widest text-stone-500 mb-2">
+            Skills & Interests
+          </p>
+          <div class="flex flex-wrap gap-2">
+            {allSkills.slice(0, 8).map((skill) => (
+              <span class="inline-block px-3 py-1 text-xs text-stone-600 bg-white rounded-full ring-1 ring-stone-200">
+                {skill}
+              </span>
+            ))}
+          </div>
+          {profile.interests && profile.interests.length > 0 && (
+            <div class="flex flex-wrap gap-2 mt-2">
+              {profile.interests.map((interest) => (
+                <span class="inline-block px-3 py-1 text-xs text-[#c49a3c] bg-amber-50 rounded-full ring-1 ring-amber-200">
+                  {interest}
+                </span>
+              ))}
+            </div>
+          )}
+        </div>
+
+        <!-- Listening -->
+        <div>
+          <p class="font-mono text-[10px] uppercase tracking-widest text-stone-500 mb-2">
+            Listening to
+          </p>
+          <ul class="space-y-1">
+            {listening.map((item) => (
+              <li class="text-sm text-stone-700">
+                <span class="font-medium">{item.title}</span>
+                <span class="text-stone-400"> — {item.detail}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <!-- Reading -->
+        <div>
+          <p class="font-mono text-[10px] uppercase tracking-widest text-stone-500 mb-2">
+            Reading
+          </p>
+          <ul class="space-y-1">
+            {reading.map((item) => (
+              <li class="text-sm text-stone-700">
+                <span class="font-medium">{item.title}</span>
+                <span class="text-stone-400"> — {item.detail}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <!-- Watching -->
+        <div>
+          <p class="font-mono text-[10px] uppercase tracking-widest text-stone-500 mb-2">
+            Watching
+          </p>
+          <ul class="space-y-1">
+            {watching.map((item) => (
+              <li class="text-sm text-stone-700">
+                <span class="font-medium">{item.title}</span>
+                <span class="text-stone-400"> — {item.detail}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
