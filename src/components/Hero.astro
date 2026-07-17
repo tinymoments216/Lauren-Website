@@ -7,12 +7,12 @@ const cardImages = [
   '/cards/moana.png',
   '/cards/droid.png',
 ];
-// Symmetric fan around center. hitL/hitW = exclusive hover strip (rem) so overlaps don't steal hover.
+// Wider symmetric fan. Equal non-overlapping hit strips so every card is hoverable.
 const cardPositions = [
-  { rotateY: -22, rotateZ: -5, depth: -60, z: 1, x: -4.875, mdX: -6.75, hitL: -8.375, hitW: 5.125, mdHitL: -11.25, mdHitW: 6.75 },
-  { rotateY: -10, rotateZ: -2, depth: -25, z: 2, x: -1.625, mdX: -2.25, hitL: -3.25, hitW: 3.25, mdHitL: -4.5, mdHitW: 4.5 },
-  { rotateY: 10, rotateZ: 2, depth: 10, z: 3, x: 1.625, mdX: 2.25, hitL: 0, hitW: 3.25, mdHitL: 0, mdHitW: 4.5 },
-  { rotateY: 22, rotateZ: 5, depth: 35, z: 4, x: 4.875, mdX: 6.75, hitL: 3.25, hitW: 5.125, mdHitL: 4.5, mdHitW: 6.75 },
+  { rotateY: -18, rotateZ: -4, depth: -50, z: 1, x: -7.5, mdX: -10.5 },
+  { rotateY: -8, rotateZ: -2, depth: -20, z: 2, x: -2.5, mdX: -3.5 },
+  { rotateY: 8, rotateZ: 2, depth: 10, z: 3, x: 2.5, mdX: 3.5 },
+  { rotateY: 18, rotateZ: 4, depth: 30, z: 4, x: 7.5, mdX: 10.5 },
 ];
 ---
 
@@ -30,14 +30,14 @@ const cardPositions = [
       Lauren Wiener
     </h1>
 
-    <div class="mt-6 flex items-center justify-center">
+    <div class="mt-6 flex items-center justify-center w-full">
       <div class="card-scene">
         {cardImages.map((src, i) => {
           const pos = cardPositions[i];
           return (
             <div
               class="card-slot"
-              style={`--card-x:${pos.x}rem;--card-md-x:${pos.mdX}rem;--hit-l:${pos.hitL}rem;--hit-w:${pos.hitW}rem;--md-hit-l:${pos.mdHitL}rem;--md-hit-w:${pos.mdHitW}rem;--card-rotateY:${pos.rotateY}deg;--card-rotateZ:${pos.rotateZ}deg;--card-depth:${pos.depth}px;z-index:${pos.z}`}
+              style={`--i:${i};--card-x:${pos.x}rem;--card-md-x:${pos.mdX}rem;--card-rotateY:${pos.rotateY}deg;--card-rotateZ:${pos.rotateZ}deg;--card-depth:${pos.depth}px;z-index:${pos.z}`}
             >
               <div class="card rounded-xl shadow-2xl overflow-hidden ring-1 ring-stone-200 cursor-pointer">
                 <img
@@ -115,31 +115,35 @@ const cardPositions = [
 
 <style>
   .card-scene {
+    --card-w: 7rem;
+    --card-h: 9rem;
+    --scene-w: 22rem;
+    --strip-w: calc(var(--scene-w) / 4);
+
     position: relative;
-    width: 16.75rem;
+    width: var(--scene-w);
     height: 10.5rem;
+    margin-inline: auto;
     perspective: 1200px;
     transform-style: preserve-3d;
   }
 
-  /* Hit strip is non-overlapping; card is painted relative to scene center */
   .card-slot {
     position: absolute;
-    left: 50%;
+    left: calc(var(--i) * var(--strip-w));
     top: 50%;
-    width: var(--hit-w);
-    height: 9rem;
-    margin-left: var(--hit-l);
-    margin-top: -4.5rem;
+    width: var(--strip-w);
+    height: var(--card-h);
+    margin-top: calc(var(--card-h) / -2);
     transform-style: preserve-3d;
   }
 
   .card {
     position: absolute;
-    left: calc(50% - var(--hit-l) + var(--card-x) - 3.5rem);
+    left: calc(var(--scene-w) / 2 + var(--card-x) - var(--card-w) / 2 - var(--i) * var(--strip-w));
     top: 0;
-    width: 7rem;
-    height: 9rem;
+    width: var(--card-w);
+    height: var(--card-h);
     transform: rotateY(var(--card-rotateY, 0deg)) rotateZ(var(--card-rotateZ, 0deg)) translateZ(var(--card-depth, 0px));
     transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.5s ease;
     transform-origin: center bottom;
@@ -148,21 +152,14 @@ const cardPositions = [
 
   @media (min-width: 768px) {
     .card-scene {
-      width: 22.5rem;
+      --card-w: 9rem;
+      --card-h: 12rem;
+      --scene-w: 30rem;
       height: 14rem;
     }
 
-    .card-slot {
-      width: var(--md-hit-w);
-      height: 12rem;
-      margin-left: var(--md-hit-l);
-      margin-top: -6rem;
-    }
-
     .card {
-      left: calc(50% - var(--md-hit-l) + var(--card-md-x) - 4.5rem);
-      width: 9rem;
-      height: 12rem;
+      left: calc(var(--scene-w) / 2 + var(--card-md-x) - var(--card-w) / 2 - var(--i) * var(--strip-w));
     }
   }
 
@@ -171,7 +168,7 @@ const cardPositions = [
   }
 
   .card-slot:hover .card {
-    transform: rotateY(0deg) rotateZ(0deg) translateZ(calc(var(--card-depth, 0px) + 80px)) scale(1.15) translateY(-12px);
+    transform: rotateY(0deg) rotateZ(0deg) translateZ(calc(var(--card-depth, 0px) + 80px)) scale(1.12) translateY(-12px);
     box-shadow: 0 40px 80px -12px rgba(0, 0, 0, 0.4);
   }
 </style>
