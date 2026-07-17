@@ -7,12 +7,11 @@ const cardImages = [
   '/cards/moana.png',
   '/cards/droid.png',
 ];
-// Wider symmetric fan. Equal non-overlapping hit strips so every card is hoverable.
 const cardPositions = [
-  { rotateY: -18, rotateZ: -4, depth: -50, z: 1, x: -7.5, mdX: -10.5 },
-  { rotateY: -8, rotateZ: -2, depth: -20, z: 2, x: -2.5, mdX: -3.5 },
-  { rotateY: 8, rotateZ: 2, depth: 10, z: 3, x: 2.5, mdX: 3.5 },
-  { rotateY: 18, rotateZ: 4, depth: 30, z: 4, x: 7.5, mdX: 10.5 },
+  { rotateY: -18, rotateZ: -4, depth: -50, z: 1 },
+  { rotateY: -8, rotateZ: -2, depth: -20, z: 2 },
+  { rotateY: 8, rotateZ: 2, depth: 10, z: 3 },
+  { rotateY: 18, rotateZ: 4, depth: 30, z: 4 },
 ];
 ---
 
@@ -30,14 +29,14 @@ const cardPositions = [
       Lauren Wiener
     </h1>
 
-    <div class="mt-6 flex items-center justify-center w-full">
+    <div class="mt-6 flex justify-center w-full">
       <div class="card-scene">
         {cardImages.map((src, i) => {
           const pos = cardPositions[i];
           return (
             <div
               class="card-slot"
-              style={`--i:${i};--card-x:${pos.x}rem;--card-md-x:${pos.mdX}rem;--card-rotateY:${pos.rotateY}deg;--card-rotateZ:${pos.rotateZ}deg;--card-depth:${pos.depth}px;z-index:${pos.z}`}
+              style={`--card-rotateY:${pos.rotateY}deg;--card-rotateZ:${pos.rotateZ}deg;--card-depth:${pos.depth}px;z-index:${pos.z}`}
             >
               <div class="card rounded-xl shadow-2xl overflow-hidden ring-1 ring-stone-200 cursor-pointer">
                 <img
@@ -114,34 +113,41 @@ const cardPositions = [
 </section>
 
 <style>
+  /*
+    Flex row centers the whole fan. Each slot is a non-overlapping hover strip;
+    cards sit at the left of their slot and overflow right into the next strip.
+    Total width = strip*(n-1) + card = visual width, so centering is exact.
+  */
   .card-scene {
-    --card-w: 7rem;
-    --card-h: 9rem;
-    --scene-w: 22rem;
-    --strip-w: calc(var(--scene-w) / 4);
+    --card-w: 6.5rem;
+    --card-h: 8.5rem;
+    --strip: 4.75rem;
 
-    position: relative;
-    width: var(--scene-w);
-    height: 10.5rem;
-    margin-inline: auto;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    height: 10rem;
     perspective: 1200px;
     transform-style: preserve-3d;
   }
 
   .card-slot {
-    position: absolute;
-    left: calc(var(--i) * var(--strip-w));
-    top: 50%;
-    width: var(--strip-w);
+    position: relative;
+    flex: 0 0 var(--strip);
+    width: var(--strip);
     height: var(--card-h);
-    margin-top: calc(var(--card-h) / -2);
     transform-style: preserve-3d;
+  }
+
+  .card-slot:last-child {
+    flex-basis: var(--card-w);
+    width: var(--card-w);
   }
 
   .card {
     position: absolute;
-    left: calc(var(--scene-w) / 2 + var(--card-x) - var(--card-w) / 2 - var(--i) * var(--strip-w));
-    top: 0;
+    left: 0;
+    bottom: 0;
     width: var(--card-w);
     height: var(--card-h);
     transform: rotateY(var(--card-rotateY, 0deg)) rotateZ(var(--card-rotateZ, 0deg)) translateZ(var(--card-depth, 0px));
@@ -154,12 +160,8 @@ const cardPositions = [
     .card-scene {
       --card-w: 9rem;
       --card-h: 12rem;
-      --scene-w: 30rem;
+      --strip: 6.5rem;
       height: 14rem;
-    }
-
-    .card {
-      left: calc(var(--scene-w) / 2 + var(--card-md-x) - var(--card-w) / 2 - var(--i) * var(--strip-w));
     }
   }
 
