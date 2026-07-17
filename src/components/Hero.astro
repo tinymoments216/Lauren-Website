@@ -8,10 +8,10 @@ const cardImages = [
   '/cards/droid.png',
 ];
 const cardPositions = [
-  { rotateY: -22, rotateZ: -5, x: -100, mdX: -210, depth: -60, z: 1 },
-  { rotateY: -10, rotateZ: -2, x: -33, mdX: -70, depth: -25, z: 2 },
-  { rotateY: 10, rotateZ: 2, x: 33, mdX: 70, depth: 10, z: 3 },
-  { rotateY: 22, rotateZ: 5, x: 100, mdX: 210, depth: 35, z: 4 },
+  { rotateY: -22, rotateZ: -5, depth: -60, z: 1 },
+  { rotateY: -10, rotateZ: -2, depth: -25, z: 2 },
+  { rotateY: 10, rotateZ: 2, depth: 10, z: 3 },
+  { rotateY: 22, rotateZ: 5, depth: 35, z: 4 },
 ];
 ---
 
@@ -30,18 +30,18 @@ const cardPositions = [
     </h1>
 
     <div class="mt-6 flex items-center justify-center">
-      <div class="card-scene relative w-full h-40 md:w-[44rem] md:h-64">
+      <div class="card-scene flex items-center justify-center h-40 md:h-64">
         {cardImages.map((src, i) => {
           const pos = cardPositions[i];
           return (
             <div
-              class="card absolute w-28 h-36 md:w-36 md:h-48 rounded-xl shadow-2xl overflow-hidden ring-1 ring-stone-200 cursor-pointer group"
-              style={`left:50%;top:50%;--card-rotateY:${pos.rotateY}deg;--card-rotateZ:${pos.rotateZ}deg;--card-x:${pos.x}px;--card-md-x:${pos.mdX}px;--card-depth:${pos.depth}px;z-index:${pos.z}`}
+              class="card w-28 h-36 md:w-36 md:h-48 rounded-xl shadow-2xl overflow-hidden ring-1 ring-stone-200 cursor-pointer"
+              style={`--card-rotateY:${pos.rotateY}deg;--card-rotateZ:${pos.rotateZ}deg;--card-depth:${pos.depth}px;z-index:${pos.z}`}
             >
               <img
                 src={src}
                 alt=""
-                class="w-full h-full object-cover"
+                class="w-full h-full object-cover pointer-events-none"
                 loading="eager"
               />
             </div>
@@ -117,21 +117,31 @@ const cardPositions = [
   }
 
   .card {
-    transform: translate(-50%, -50%) translateX(var(--card-x, 0px)) rotateY(var(--card-rotateY, 0deg)) rotateZ(var(--card-rotateZ, 0deg)) translateZ(var(--card-depth, 0px));
-    transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.6s ease, z-index 0s step-start;
+    position: relative;
+    flex-shrink: 0;
+    margin-left: -2.5rem;
+    transform: rotateY(var(--card-rotateY, 0deg)) rotateZ(var(--card-rotateZ, 0deg)) translateZ(var(--card-depth, 0px));
+    transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.5s ease, margin 0.5s ease;
     transform-origin: center bottom;
+  }
+
+  .card:first-child {
+    margin-left: 0;
   }
 
   @media (min-width: 768px) {
     .card {
-      transform: translate(-50%, -50%) translateX(var(--card-md-x, var(--card-x, 0px))) rotateY(var(--card-rotateY, 0deg)) rotateZ(var(--card-rotateZ, 0deg)) translateZ(var(--card-depth, 0px));
+      margin-left: -3.5rem;
+    }
+
+    .card:first-child {
+      margin-left: 0;
     }
   }
 
   .card:hover {
     z-index: 50 !important;
-    transform: translate(-50%, -50%) translateX(var(--card-md-x, var(--card-x, 0px))) rotateY(0deg) rotateZ(0deg) translateZ(calc(var(--card-depth, 0px) + 80px)) scale(1.15);
+    transform: rotateY(0deg) rotateZ(0deg) translateZ(calc(var(--card-depth, 0px) + 80px)) scale(1.15) translateY(-12px);
     box-shadow: 0 40px 80px -12px rgba(0, 0, 0, 0.4);
-    transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.5s ease, z-index 0s step-start;
   }
 </style>
