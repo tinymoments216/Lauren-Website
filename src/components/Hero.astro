@@ -1,17 +1,11 @@
 ---
 import { profile } from '../data/resume';
 
-const cardImages = [
-  '/cards/loveisland.png',
-  '/cards/616.png',
-  '/cards/moana.png',
-  '/cards/droid.png',
-];
-const cardPositions = [
-  { rotateY: -18, rotateZ: -4, depth: -50, z: 1 },
-  { rotateY: -8, rotateZ: -2, depth: -20, z: 2 },
-  { rotateY: 8, rotateZ: 2, depth: 10, z: 3 },
-  { rotateY: 18, rotateZ: 4, depth: 30, z: 4 },
+const cards = [
+  { image: 'loveisland', title: 'Love Island', tilt: -4, turn: -12 },
+  { image: '616', title: 'Marvel’s 616', tilt: -1.5, turn: -4 },
+  { image: 'moana', title: 'Moana', tilt: 1.5, turn: 4 },
+  { image: 'droid', title: 'R2-D2 and BB-8 from Star Wars', tilt: 4, turn: 12 },
 ];
 ---
 
@@ -29,27 +23,20 @@ const cardPositions = [
       Lauren Wiener
     </h1>
 
-    <div class="mt-6 flex justify-center w-full">
-      <div class="card-scene">
-        {cardImages.map((src, i) => {
-          const pos = cardPositions[i];
-          return (
-            <div
-              class="card-slot"
-              style={`--card-rotateY:${pos.rotateY}deg;--card-rotateZ:${pos.rotateZ}deg;--card-depth:${pos.depth}px;z-index:${pos.z}`}
-            >
-              <div class="card rounded-xl shadow-2xl overflow-hidden ring-1 ring-stone-200 cursor-pointer">
-                <img
-                  src={src}
-                  alt=""
-                  class="w-full h-full object-cover"
-                  loading="eager"
-                />
-              </div>
-            </div>
-          );
-        })}
-      </div>
+    <div class="card-scene">
+      {cards.map(({ image, title, tilt, turn }) => (
+        <div class="card-slot" style={`--tilt:${tilt}deg;--turn:${turn}deg`}>
+          <img
+            class="card"
+            src={`/cards/${image}-360.webp`}
+            srcset={`/cards/${image}-360.webp 360w, /cards/${image}-640.webp 640w`}
+            sizes="(min-width: 972px) 260px, (min-width: 480px) calc(27.5vw - 7px), calc(29vw - 14px)"
+            width="360"
+            height="504"
+            alt={title}
+          />
+        </div>
+      ))}
     </div>
 
     <h2 class="mt-6 font-display text-[clamp(2.5rem,6vw,5rem)] font-normal leading-[0.95] tracking-tight text-stone-400 select-none">
@@ -113,64 +100,63 @@ const cardPositions = [
 </section>
 
 <style>
-  /*
-    Flex row centers the whole fan. Each slot is a non-overlapping hover strip;
-    cards sit at the left of their slot and overflow right into the next strip.
-    Total width = strip*(n-1) + card = visual width, so centering is exact.
-  */
   .card-scene {
-    --card-w: 6.5rem;
-    --card-h: 8.5rem;
-    --strip: 4.75rem;
-
-    display: flex;
-    align-items: flex-end;
-    justify-content: center;
-    height: 10rem;
-    perspective: 1200px;
-    transform-style: preserve-3d;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 0.82fr)) minmax(0, 1fr);
+    max-width: 56rem;
+    margin: clamp(0.75rem, 2vw, 1.5rem) auto 0;
+    width: calc(100% - clamp(1.5rem, 5vw, 4rem));
+    isolation: isolate;
   }
 
   .card-slot {
+    /* The slot stays still and owns hover while the artwork moves. */
     position: relative;
-    flex: 0 0 var(--strip);
-    width: var(--strip);
-    height: var(--card-h);
-    transform-style: preserve-3d;
-  }
-
-  .card-slot:last-child {
-    flex-basis: var(--card-w);
-    width: var(--card-w);
+    padding-block: clamp(0.75rem, 2vw, 1.5rem);
   }
 
   .card {
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: var(--card-w);
-    height: var(--card-h);
-    transform: rotateY(var(--card-rotateY, 0deg)) rotateZ(var(--card-rotateZ, 0deg)) translateZ(var(--card-depth, 0px));
-    transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.5s ease;
-    transform-origin: center bottom;
+    display: block;
+    width: calc(100% / 0.82);
+    max-width: none;
+    height: auto;
+    border: 1px solid rgb(255 255 255 / 70%);
+    border-radius: clamp(0.625rem, 2vw, 1.5rem);
+    background: #e7e5e4;
+    box-shadow: 0 0.75rem 1.75rem -0.625rem rgb(28 25 23 / 28%);
+    transform: translateX(var(--nudge, 0px)) perspective(64rem) rotateY(var(--turn)) rotateZ(var(--tilt));
     pointer-events: none;
   }
 
-  @media (min-width: 768px) {
-    .card-scene {
-      --card-w: 9rem;
-      --card-h: 12rem;
-      --strip: 6.5rem;
-      height: 14rem;
+  .card-slot:last-child .card {
+    width: 100%;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .card-slot:hover {
+      z-index: 1;
+    }
+
+    .card-slot:hover .card {
+      transform: none;
     }
   }
 
-  .card-slot:hover {
-    z-index: 50 !important;
-  }
+  @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+    .card {
+      transition: transform 280ms cubic-bezier(0.22, 1, 0.36, 1);
+    }
 
-  .card-slot:hover .card {
-    transform: rotateY(0deg) rotateZ(0deg) translateZ(calc(var(--card-depth, 0px) + 80px)) scale(1.12) translateY(-12px);
-    box-shadow: 0 40px 80px -12px rgba(0, 0, 0, 0.4);
+    .card-slot:has(+ .card-slot:hover) {
+      --nudge: clamp(-0.75rem, -1vw, -0.25rem);
+    }
+
+    .card-slot:hover + .card-slot {
+      --nudge: clamp(0.25rem, 1vw, 0.75rem);
+    }
+
+    .card-slot:hover .card {
+      transform: translateY(clamp(-1rem, -1.25vw, -0.5rem)) perspective(64rem) rotateY(0deg) rotateZ(0deg) scale(1.045);
+    }
   }
 </style>
